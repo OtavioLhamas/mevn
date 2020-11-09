@@ -1,15 +1,14 @@
+const { response } = require('express');
 const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const nameSchema = new Schema({
-  first_name: String,
-  last_name: String
-});
-
 const UserSchema = new Schema({
   name: {
-    type: nameSchema,
+    type: {
+      firstName: String,
+      lastName: String
+    },
     required: [true, 'Let us know you by adding your name!']
   },
   email: {
@@ -30,89 +29,64 @@ const UserSchema = new Schema({
 const User = mongoose.model("User", UserSchema)
 module.exports = User
 
-const userResource = new User({
-  name: 'John Doe',
-  email: 'john@doe.com'
-})
+// const userResource = new User({
+//   name: { firstName: 'John', lastName: 'Doe'},
+//   email: 'john@doe.com'
+// })
 
-userResource.save((error) => {
-  if(error)
-    console.log(error);
+// userResource.save((error) => {
+//   if (error) { console.log(error); }
+// })
 
-  res.send({
-    success: true,
-    code: 200,
-    msg: "User added!"
-  })
-})
+// User.find({}, 'name email', function (error, users) {
+//   if (error) { console.error(error); }
+//   console.log('All Users:', users);
+// });
 
-User.find({}, 'name email', function (error, users) {
-  if (error) { console.error(error); }
-  res.send({
-    users: users
-  })
-})
+// async function findById() {
+//   const id = await User.find({}, function (error, users) {
+//     if (error) { console.error(error); }
+//     return users[0].id
+//   });
 
-User.findById(1, 'name email', function (error, user) {
-  if (error) { console.error(error); }
-  res.send(user)
-})
+//   console.log('Frist User ID:', id)
 
-User.findById(1, 'name email', function (error, user) {
-  if (error) { console.error(error); }
+//   User.findById(id, 'name email', function (error, user) {
+//     if (error) { console.error(error); }
+//     console.log('Find By Id:', user);
+//   })
 
-  user.name = 'Peter'
-  user.email = 'peter@gmail.com'
+//   User.findById(id, 'name email', function (error, user) {
+//     if (error) { console.error(error); }
+//     if (!user) { return console.log('user not found'); }
+ 
+//     user.name = { firstName: 'Peter', lastName: 'Jackson' };
+//     user.email = 'peter@gmail.com';
+  
+//     user.save(function (error) {
+//       if (error) {
+//         console.log(error)
+//       }
+//     })
+//   })
+// }
+// findById()
 
-  user.save(function (error) {
-    if (error) {
-      console.log(error)
-    }
-    res.send({
-      success: true
-    })
-  })
-})
+// User.findOneAndUpdate({name: { firstName: 'Peter', lastName: 'Jackson' }}, { name: { firstName: 'Sara', lastName: 'Maria' }},
+// function(err, user){
+//   if(err){
+//     console.log(err);
+//   }
+//   console.log(user)
+// });
 
-User.findOneAndUpdate({name: 'Peter'}, { $set: { name: "Sara" } },
-function(err){
-  if(err){
-    console.log(err);
-  }
-});
 
-User.remove(
-  { _id: 1 }, 
-  function(err){
-    if (err)
-      res.send(err)
-    
-    res.send({
-      success: true
-    })
-  }
-)
+// User.findOneAndRemove(
+//   { name: 'Anita' }, 
+//   function(error, user){
+//     if (error)
+//       console.log(error)
 
-User.findOneAndRemove(
-  { name: 'Anita' }, 
-  function(err, user){
-    if (err)
-      res.send(err)
-    
-    res.send({
-      success: true,
-      user: user
-    })
-  }
-)
-
-User.findByIdAndRemove(
-  1, 
-  function(err){
-    if (err)
-      res.send(err)
-    res.send({
-      success: true
-    })
-  }
-)
+//     console.log(user)
+//   }
+// )

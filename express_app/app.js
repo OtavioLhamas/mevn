@@ -4,18 +4,23 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const mongoose = require('mongoose');
+// Require file system module
+const fs = require('file-system');
 
 const app = express();
 
+app.use(logger('dev'));
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+
 //connect to mongodb
-mongoose.connect('mongodb://localhost:27017/express_app', {useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect('mongodb://localhost:27017/express_app', {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
 .catch(err => {
   console.error('App starting error:', err.stack);
   process.exit(1);
 });
-
-// Require file system module
-const fs = require('file-system');
 
 // Include controllers
 fs.readdirSync('controllers').forEach(function (file) {
@@ -28,12 +33,6 @@ fs.readdirSync('controllers').forEach(function (file) {
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
-
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
