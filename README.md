@@ -1,1 +1,1 @@
-Wiki
+Learning the MEVN stack, based on the book "Full-Stack Web Development with Vue.js and Node" by Aneeta Sharma
