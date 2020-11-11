@@ -24,6 +24,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: 'AddMovie',
   data: () => ({
@@ -40,7 +42,24 @@ export default {
     submit() {
       if (this.$refs.form.validate()) {
         // Perform next action
+        return axios({
+          method: 'post',
+          data: {
+            name: this.name,
+            description: this.description,
+            releaseYear: this.releaseYear,
+            genre: this.genre,
+          },
+          url: 'http://localhost:8081/movies',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }).then(() => {
+          this.$router.push({ name: 'Home' });
+          this.$refs.form.reset();
+        }).catch(() => {});
       }
+      return true;
     },
     clear() {
       this.$refs.form.reset();
