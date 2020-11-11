@@ -5,7 +5,7 @@
       <v-toolbar-title>Home</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items class="hidden-sm-and-down">
-        <v-btn flat :to="{ name: 'AddMovie' }">Add Movie</v-btn>
+        <v-btn text :to="{ name: 'AddMovie' }">Add Movie</v-btn>
       </v-toolbar-items>
     </v-app-bar>
 
@@ -30,13 +30,13 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-content>
+    <v-main>
       <v-container fluid fixed>
         <div id="app">
           <router-view />
         </div>
       </v-container>
-    </v-content>
+    </v-main>
 
     <v-footer color="indigo" app fixed>
       <span class="white--text">&copy; 2018</span>
