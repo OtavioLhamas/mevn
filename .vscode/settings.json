@@ -1,5 +1,8 @@
 {
   "javascript.preferences.quoteStyle": "single",
   "typescript.preferences.quoteStyle": "single",
-  "prettier.singleQuote": true
+  "prettier.singleQuote": true,
+  "editor.quickSuggestions": {
+    "strings": true,
+  }
 }

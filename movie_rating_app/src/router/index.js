@@ -1,7 +1,8 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Home from '../views/Home.vue';
-import Contact from '../views/Contact.vue';
+import Home from '@/views/Home.vue';
+import Contact from '@/views/Contact.vue';
+import AddMovie from '../views/AddMovie.vue';
 
 Vue.use(VueRouter);
 
@@ -23,6 +24,11 @@ const routes = [
     path: '/contact',
     name: 'Contact',
     component: Contact,
+  },
+  {
+    path: '/movies/add',
+    name: 'AddMovie',
+    component: AddMovie,
   },
 ];
 

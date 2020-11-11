@@ -1,8 +1,12 @@
 <template>
   <v-app id="inspire">
-    <v-app-bar color="indigo" dark app>
+    <v-app-bar color="indigo" dark fixed app>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>Home</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-toolbar-items class="hidden-sm-and-down">
+        <v-btn flat :to="{ name: 'AddMovie' }">Add Movie</v-btn>
+      </v-toolbar-items>
     </v-app-bar>
 
     <v-navigation-drawer fixed v-model="drawer" app>
@@ -27,12 +31,16 @@
     </v-navigation-drawer>
 
     <v-content>
-      <v-container fluid>
+      <v-container fluid fixed>
         <div id="app">
           <router-view />
         </div>
       </v-container>
     </v-content>
+
+    <v-footer color="indigo" app fixed>
+      <span class="white--text">&copy; 2018</span>
+    </v-footer>
   </v-app>
 </template>
 
