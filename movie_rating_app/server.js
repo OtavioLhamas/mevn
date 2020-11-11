@@ -8,6 +8,7 @@ const passport = require('passport');
 const passportJwt = require('passport-jwt');
 const User = require('./models/UserModel');
 const serveStatic = require('serve-static');
+const history = require('connect-history-api-fallback');
 
 const ExtractJwt = passportJwt.ExtractJwt;
 const JwtStrategy = passportJwt.Strategy;
@@ -32,6 +33,7 @@ passport.use(new JwtStrategy(jwtOptions, (payload, done) => {
 const app = express();
 const router = express.Router();
 
+app.use(history());
 app.use(morgan('combined'));
 app.use(express.json());
 app.use(cors());
