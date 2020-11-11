@@ -5,7 +5,29 @@
       <v-toolbar-title>Home</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items class="hidden-sm-and-down">
-        <v-btn text :to="{ name: 'AddMovie' }">Add Movie</v-btn>
+        <v-btn
+          text
+          id="add_movie_link"
+          :to="{ name: 'AddMovie' }"
+          v-if="currentUser"
+          >Add Movie</v-btn
+        >
+        <v-btn text id="user_email" v-if="currentUser">{{
+          currentUser.email
+        }}</v-btn>
+        <v-btn
+          text
+          id="register_btn"
+          v-if="!currentUser"
+          :to="{ name: 'Register' }"
+          >Register</v-btn
+        >
+        <v-btn text id="login_btn" v-if="!currentUser" :to="{ name: 'Login' }"
+          >Login</v-btn
+        >
+        <v-btn text id="logout_btn" v-if="currentUser" @click="logout"
+          >Logout</v-btn
+        >
       </v-toolbar-items>
     </v-app-bar>
 
@@ -46,14 +68,49 @@
 
 <script>
 import './assets/stylesheets/main.css';
+import axios from 'axios';
+import bus from './bus';
 
 export default {
   name: 'App',
   data: () => ({
     drawer: true,
+    currentUser: null,
   }),
   props: {
     source: String,
+  },
+  mounted() {
+    this.fetchUser();
+    this.listenToEvents();
+  },
+  methods: {
+    listenToEvents() {
+      bus.$on('refreshUser', () => {
+        this.fetchUser();
+      });
+    },
+    async fetchUser() {
+      return axios({
+        method: 'get',
+        url: '/api/currentUser',
+      })
+        .then((response) => {
+          this.currentUser = response.data.currentUser;
+        })
+        .catch(() => {});
+    },
+    logout() {
+      return axios({
+        method: 'get',
+        url: '/api/logout',
+      })
+        .then(() => {
+          bus.$emit('refershUser');
+          this.fetchUser();
+        })
+        .catch(() => {});
+    },
   },
 };
 </script>

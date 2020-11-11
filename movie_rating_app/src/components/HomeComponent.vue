@@ -35,17 +35,14 @@ export default {
   },
   methods: {
     async fetchMovies() {
-      const token = window.localStorage.getItem('auth');
       return axios({
         method: 'get',
         url: '/movies',
         headers: {
-          Authorization: `JWT ${token}`,
           'Content-Type': 'application/json',
         },
       })
         .then((response) => {
-          console.log(response);
           this.movies = response.data.movies;
         })
         .catch(() => {});
