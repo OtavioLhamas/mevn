@@ -71,7 +71,7 @@ export default {
             this.$swal(
               'Great!',
               'Movie added successfully!',
-              'success'
+              'success',
             );
             this.$router.push({ name: 'Home' });
             this.$refs.form.reset();
@@ -80,8 +80,8 @@ export default {
             this.$swal(
               'Oh oo!',
               'Could not add the movie!',
-              'error'
-            )
+              'error',
+            );
           });
       }
       return true;
