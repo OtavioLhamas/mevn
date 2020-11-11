@@ -5,6 +5,7 @@ import Contact from '@/views/Contact.vue';
 import AddMovie from '@/views/AddMovie.vue';
 import Movie from '@/components/MovieComponent.vue';
 import Register from '@/components/RegisterComponent.vue';
+import Login from '@/components/LoginComponent.vue';
 
 Vue.use(VueRouter);
 
@@ -41,6 +42,11 @@ const routes = [
     path: '/users/register',
     name: 'Register',
     component: Register,
+  },
+  {
+    path: '/users/login',
+    name: 'Login',
+    component: Login,
   },
 ];
 

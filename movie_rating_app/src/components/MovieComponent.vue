@@ -12,6 +12,7 @@
             </span>
           </div>
         </v-card-title>
+        <h6 class="card-title" v-if="currentUser">Rate this movie</h6>
         <v-card-text>
           {{ movie.description }}
         </v-card-text>
@@ -35,12 +36,18 @@ export default {
   },
   methods: {
     async fetchMovie() {
+      const token = window.localStorage.getItem('auth');
       return axios({
         method: 'get',
-        url: `http://localhost:8081/api/movies/${this.$route.params.id}`,
+        url: `/movies/${this.$route.params.id}`,
+        headers: {
+          Authorization: `JWT ${token}`,
+          'Content-Type': 'application/json',
+        },
       })
         .then((response) => {
-          this.movie = response.data;
+          this.movie = response.data.movie;
+          this.currentUser = response.data.currentUser;
         })
         .catch(() => {});
     },

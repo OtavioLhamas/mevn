@@ -6,11 +6,28 @@ const fs = require('fs');
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
 const passportJwt = require('passport-jwt');
+const User = require('./models/UserModel');
+const serveStatic = require('serve-static');
+
 const ExtractJwt = passportJwt.ExtractJwt;
 const JwtStrategy = passportJwt.Strategy;
 const jwtOptions = {};
 jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme('jwt');
 jwtOptions.secretOrKey = 'movieratingapplicationsecretkey';
+
+passport.use(new JwtStrategy(jwtOptions, (payload, done) => {
+  User.findOne({id: payload.sub}, (err, user) => {
+    if (err) {
+      return done(err, false);
+    }
+    if (user) {
+      return done(null, user);
+    } else {
+      return done(null, false);
+    }
+  });
+
+}));
 
 const app = express();
 const router = express.Router();
@@ -36,6 +53,8 @@ fs.readdirSync('controllers').forEach(function (file) {
     route.controller(app)
   }
 })
+
+app.use(serveStatic(__dirname + '/dist'));
 
 router.get('/', function(req, res) {
   res.json({ message: 'API Initialized!'});
