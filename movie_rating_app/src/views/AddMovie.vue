@@ -31,8 +31,6 @@
 </template>
 
 <script>
-import axios from 'axios';
-
 export default {
   name: 'AddMovie',
   data: () => ({
@@ -53,36 +51,15 @@ export default {
   methods: {
     submit() {
       if (this.$refs.form.validate()) {
-        // Perform next action
-        return axios({
-          method: 'post',
-          data: {
-            name: this.name,
-            description: this.description,
-            releaseYear: this.releaseYear,
-            genre: this.genre,
-          },
-          url: '/movies',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        })
-          .then(() => {
-            this.$swal(
-              'Great!',
-              'Movie added successfully!',
-              'success',
-            );
-            this.$router.push({ name: 'Home' });
-            this.$refs.form.reset();
-          })
-          .catch(() => {
-            this.$swal(
-              'Oh oo!',
-              'Could not add the movie!',
-              'error',
-            );
-          });
+        const movie = {
+          name: this.name,
+          description: this.description,
+          releaseYear: this.releaseYear,
+          genre: this.genre,
+        };
+        this.$store.dispatch('addMovie', movie);
+        this.$refs.form.reset();
+        this.$router.push({ name: 'Home' });
       }
       return true;
     },
