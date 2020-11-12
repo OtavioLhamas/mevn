@@ -87,6 +87,7 @@ export default {
   methods: {
     listenToEvents() {
       bus.$on('refreshUser', () => {
+
         this.fetchUser();
       });
     },
