@@ -2,6 +2,13 @@ const MovieSchema = require('../models/MovieModel.js');
 const passport = require('passport');
 
 module.exports.controller = (app) => {
+  // send a dummy test
+  app.get('/dummy_test', (req, res) => {
+    res.send({
+      name: 'John',
+    });
+  });
+
   // fetch all movies
   app.get('/movies', (req, res) => {
     MovieSchema.find({}, '', (error, movies) => {

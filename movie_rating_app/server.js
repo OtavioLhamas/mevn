@@ -23,8 +23,12 @@ app.use(session({
   saveUninitialized: true,
   cookie: {
     httpOnly: false
-  }
+  },
+  useNewUrlParser: true, 
+  useUnifiedTopology: true, 
+  useFindAndModify: false,
 }))
+
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -83,6 +87,6 @@ router.get('/', function (req, res) {
 
 const port = process.env.API_PORT || 8081;
 app.use('/', router);
-app.listen(port, function () {
+module.exports = app.listen(port, function () {
   console.log(`api running on port ${port}`);
 });
